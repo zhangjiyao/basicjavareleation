@@ -6,4 +6,127 @@
   <version>1.0-SNAPSHOT</version>
   <name>Archetype - basicjavareleation</name>
   <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <scala.version>2.12.10</scala.version>
+    <scala.compatversion>2.11</scala.compatversion>
+    <spark.version>2.4.4</spark.version>
+    <slf4j.version>1.7.24</slf4j.version>
+    <encoding>UTF-8</encoding>
+    <java>1.8.0_231</java>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-reflect</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
+          <configuration>
+            <encoding>${encoding}</encoding>
+            <compilerVersion>${java.version}</compilerVersion>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+            <optimize>true</optimize>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>net.alchim31.maven</groupId>
+          <artifactId>scala-maven-plugin</artifactId>
+          <version>3.1.6</version>
+          <configuration>
+            <scalaVersion>${scala.version}</scalaVersion>
+            <scalaCompatVersion>${scala.compatversion}</scalaCompatVersion>
+            <jvmArgs>
+              <jvmArg>-Xss2m</jvmArg>
+              <jvmArg>-Xms128m</jvmArg>
+              <jvmArg>-Xmx3048m</jvmArg>
+            </jvmArgs>
+          </configuration>
+          <executions>
+            <execution>
+              <id>scala-compile-first</id>
+              <phase>process-resources</phase>
+              <goals>
+                <goal>add-source</goal>
+                <goal>compile</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>scala-test-compile</id>
+              <phase>process-test-resources</phase>
+              <goals>
+                <goal>testCompile</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>2.4.3</version>
+          <configuration>
+            <filters>
+              <filter>
+                <artifact>*:*</artifact>
+                <excludes>
+                  <exclude>META-INF/*.SF</exclude>
+                  <exclude>META-INF/*.DSA</exclude>
+                  <exclude>META-INF/*.RSA</exclude>
+                </excludes>
+              </filter>
+            </filters>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>shade</goal>
+              </goals>
+              <configuration>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.5.1</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
 </project>
