@@ -8,6 +8,6 @@ package algorithm.leetcode;
  **/
 public class A {
     public static void main(String[] args) {
-        TT tt = new TT();
+        System.out.println();
     }
 }
